@@ -12,11 +12,10 @@ public class UniScheduleBot extends TelegramLongPollingBot{
 
     private static UniScheduleBot instance;
 
-    static {
-        instance = new UniScheduleBot();
-    }
-
     public static UniScheduleBot getInstance(){
+        if(instance == null){
+            instance = new UniScheduleBot();
+        }
         return instance;
     }
 
