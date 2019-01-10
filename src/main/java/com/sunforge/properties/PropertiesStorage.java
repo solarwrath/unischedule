@@ -9,7 +9,8 @@ import java.util.Properties;
 public class PropertiesStorage {
 
     private static String rootPath;
-    private static String standardMessagesRelativePath = "standardMessages.properties";
+    private static final String STANDARD_MESSAGES_RELATIVE_PATH = "standardMessages.properties";
+    private static final String DATABASE_AUTHENTICATION_RELATIVE_PATH = "databaseAuthentication.properties";
 
     static {
         try{
@@ -18,14 +19,30 @@ public class PropertiesStorage {
             e.printStackTrace();
         }
     }
+
+    //Standard Messages
+
     private static Properties standardMessages;
 
     public static Properties getStandardMessages() throws IOException {
         if(standardMessages == null){
             standardMessages = new Properties();
-            FileInputStream input = new FileInputStream(rootPath+standardMessagesRelativePath);
+            FileInputStream input = new FileInputStream(rootPath+STANDARD_MESSAGES_RELATIVE_PATH);
             standardMessages.load(new InputStreamReader(input, Charset.forName("UTF-8")));
         }
         return standardMessages;
+    }
+
+    //Database Authentication
+
+    private static Properties databaseAuthentication;
+
+    public static Properties getDatabaseAuthentication() throws IOException {
+        if(databaseAuthentication == null){
+            databaseAuthentication = new Properties();
+            FileInputStream input = new FileInputStream(rootPath+DATABASE_AUTHENTICATION_RELATIVE_PATH);
+            databaseAuthentication.load(new InputStreamReader(input, Charset.forName("UTF-8")));
+        }
+        return databaseAuthentication;
     }
 }
