@@ -15,10 +15,10 @@ public class UnknownCommand {
         snd.setChatId(passedUpdate.getMessage().getChatId());
 
         String unknownCommandMessage;
+
         try {
             Properties standardMessages = PropertiesStorage.getStandardMessages();
             unknownCommandMessage = standardMessages.getProperty("unknownCommand");
-            System.out.println(unknownCommandMessage);
         }catch (IOException e){
             e.printStackTrace();
             unknownCommandMessage = "Сорри, я не знаю такой комманды! Попробуй какие-то из предложенных";
