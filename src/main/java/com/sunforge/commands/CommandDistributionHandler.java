@@ -9,6 +9,9 @@ public class CommandDistributionHandler {
         switch(givenCommand){
             case "/start":
                 break;
+            case "/daySchedule":
+                DayScheduleCommand.sendDayScheduleMessage(passedUpdate);
+                break;
             default:
                 UnknownCommand.sendUnknownCommandMessage(passedUpdate);
         }
