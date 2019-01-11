@@ -10,9 +10,11 @@ public class CommandDistributionHandler {
 
     public static void handleCommand(Update passedUpdate){
         String givenCommand = passedUpdate.getMessage().getText();
+
         switch(givenCommand){
             case "/start":
                 logger.info("Got /start command");
+                StartCommand.handleStartCommand(passedUpdate);
                 break;
             case "/daySchedule":
                 logger.info("Got /daySchedule command");

@@ -54,7 +54,7 @@ public class ScheduleReader {
              ResultSet rs = pst.executeQuery();
         ) {
             logger.debug("Opened all the db stuff connection");
-            StringBuilder stringBuilder = new StringBuilder("----------------------------------------------------------------------\n");
+            StringBuilder stringBuilder = new StringBuilder("--------------------------------------------------------------\n");
             if(isEvenWeek){
                 while (rs.next()) {
                     int currentOddity = rs.getInt("oddity");
@@ -63,7 +63,7 @@ public class ScheduleReader {
                         stringBuilder.append("Дисципліна: ").append(rs.getString("subject")).append("\n");
                         stringBuilder.append("Аудиторія: ").append(rs.getString("class")).append("\n");
                         stringBuilder.append("Викладач: ").append(rs.getString("teacher")).append("\n");
-                        stringBuilder.append("----------------------------------------------------------------------\n");
+                        stringBuilder.append("--------------------------------------------------------------\n");
                     }
                 }
             }else{
@@ -74,7 +74,7 @@ public class ScheduleReader {
                         stringBuilder.append("Дисципліна: ").append(rs.getString("subject")).append("\n");
                         stringBuilder.append("Аудиторія: ").append(rs.getString("class")).append("\n");
                         stringBuilder.append("Викладач: ").append(rs.getString("teacher")).append("\n");
-                        stringBuilder.append("----------------------------------------------------------------------\n");
+                        stringBuilder.append("--------------------------------------------------------------\n");
                     }
                 }
             }

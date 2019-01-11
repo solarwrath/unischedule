@@ -14,7 +14,8 @@ public enum LocalizationField {
     //SETTINGS
     SETTINGS,
 
-    //VIEW
+    //SCHEDULE
+    DAYOFF,
     SUBJECT,
     CLASS,
     TEACHER,

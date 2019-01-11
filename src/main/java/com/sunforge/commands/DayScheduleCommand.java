@@ -3,6 +3,8 @@ package com.sunforge.commands;
 import com.sunforge.UniScheduleBot;
 import com.sunforge.db.ScheduleReader;
 import com.sunforge.db.UserOperations;
+import com.sunforge.properties.LocalizationBundle;
+import com.sunforge.properties.LocalizationField;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -16,7 +18,7 @@ public class DayScheduleCommand {
 
     private static final Logger logger = LogManager.getLogger(DayScheduleCommand.class);
 
-    protected static void sendDayScheduleMessage(Update passedUpdate) {
+    public static void sendDayScheduleMessage(Update passedUpdate) {
         SendMessage snd = new SendMessage();
         snd.setChatId(passedUpdate.getMessage().getChatId());
 
@@ -25,6 +27,7 @@ public class DayScheduleCommand {
         boolean isEvenWeek = (calendar.get(Calendar.WEEK_OF_YEAR) % 2 == 0);
 
         String textToSend;
+        LocalizationBundle localizationBundle = LocalizationBundle.getInstance();
 
         try {
             short userSubgroup = UserOperations.getSubgroup(passedUpdate.getMessage().getFrom().getId());
@@ -42,19 +45,19 @@ public class DayScheduleCommand {
                     case 6:
                         textToSend = ScheduleReader.getScheduleFromDay(DayOfWeek.FRIDAY, isEvenWeek, userSubgroup);
                         break;
+
+                    //If Thursday, Saturday or Sunday, display that it is a day off
                     default:
-                        textToSend = "На сегодня пар нет!";
+                        textToSend = localizationBundle.getString(LocalizationField.DAYOFF);
                         break;
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
-                logger.error("Couldn't get the schedule from db. Current day: " + currentDay);
-                textToSend = "Ошибка! Не могу получить расписание с базы данных. Напиши Тохе чекнуть логи";
+                logger.error("Couldn't get the schedule from db. Current day: " + currentDay, e);
+                textToSend = localizationBundle.getString(LocalizationField.ERROR_DB_RETRIEVE_SCHEDULE);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            logger.error("Can't get user subgroup. User: " + passedUpdate.getMessage().getFrom().getId());
-            textToSend = "Ошибка! Не могу получить подгруппу с базы данных. Напиши Тохе чекнуть логи";
+            logger.error("Can't get user subgroup. User: " + passedUpdate.getMessage().getFrom().getId(), e);
+            textToSend = localizationBundle.getString(LocalizationField.ERROR_DB_RETRIEVE_SUBGROUP);
         }
 
         snd.setText(textToSend);

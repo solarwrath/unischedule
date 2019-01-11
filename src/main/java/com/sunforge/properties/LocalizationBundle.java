@@ -30,6 +30,7 @@ public class LocalizationBundle {
             langProps.put("settings", "Настройки");
 
             //VIEW
+            langProps.put("day_off", "На этот день пар нет!: ");
             langProps.put("subject", "Предмет: ");
             langProps.put("class", "Аудитория: ");
             langProps.put("teacher", "Препод: ");
@@ -70,7 +71,9 @@ public class LocalizationBundle {
             case SETTINGS:
                 return langProps.getProperty("settings");
 
-            //View
+            //Schedule
+            case DAYOFF:
+                return langProps.getProperty("day_off");
             case SUBJECT:
                 return langProps.getProperty("subject");
             case CLASS:
