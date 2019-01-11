@@ -18,6 +18,10 @@ public class CommandDistributionHandler {
                 logger.info("Got /daySchedule command");
                 DayScheduleCommand.sendDayScheduleMessage(passedUpdate);
                 break;
+            case "/settings":
+                logger.info("Got /settings command");
+                SettingsCommand.sendSettingsKeyboard(passedUpdate);
+                break;
             default:
                 logger.warn("Can't interpret passed command");
                 UnknownCommand.sendUnknownCommandMessage(passedUpdate);

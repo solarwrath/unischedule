@@ -4,7 +4,6 @@ import com.sunforge.UniScheduleBot;
 import com.sunforge.properties.PropertiesStorage;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -25,10 +24,6 @@ public class UnknownCommand {
         }
         snd.setText(unknownCommandMessage);
 
-        try{
-            UniScheduleBot.getInstance().execute(snd);
-        }catch (TelegramApiException e){
-            e.printStackTrace();
-        }
+        UniScheduleBot.getInstance().sendPassedMessage(snd);
     }
 }

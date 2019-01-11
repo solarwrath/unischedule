@@ -6,7 +6,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.sql.SQLException;
 import java.time.DayOfWeek;
@@ -51,12 +50,6 @@ public class DayScheduleCommand {
 
         snd.setText(textToSend);
 
-        try {
-            UniScheduleBot.getInstance().execute(snd);
-            logger.debug("Sended a message to user " + passedUpdate.getMessage().getFrom().getUserName() + " \"" + snd.getText() +"\"");
-        } catch (TelegramApiException e) {
-            logger.error("Telegram stuff fucked up");
-            e.printStackTrace();
-        }
+        UniScheduleBot.getInstance().sendPassedMessage(snd);
     }
 }
