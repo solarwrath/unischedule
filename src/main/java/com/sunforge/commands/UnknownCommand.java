@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class UnknownCommand {
-    protected static void sendUnknownCommandMessage(Update passedUpdate){
+    public static void sendUnknownCommandMessage(Update passedUpdate){
         SendMessage snd = new SendMessage();
         snd.setChatId(passedUpdate.getMessage().getChatId());
 
