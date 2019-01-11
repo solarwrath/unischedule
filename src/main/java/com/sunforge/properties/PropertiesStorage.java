@@ -22,7 +22,7 @@ public class PropertiesStorage {
             rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath() + "properties/";
             logger.debug("Successfully redeemed root path of properties");
         }catch (NullPointerException e){
-            logger.error("Couldn't get properties root path");
+            logger.fatal("Couldn't get properties root path");
             e.printStackTrace();
         }
     }
