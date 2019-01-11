@@ -20,17 +20,37 @@ public class LocalizationBundle {
 
             //Used in /start
             langProps.put("start_choose_subgroup", "Выбери свою подгруппу:");
+            langProps.put("start_wish", "Приятного использования!");
 
             //GENERAL
             langProps.put("first_subgroup", "I подгруппа");
             langProps.put("second_subgroup", "II подгруппа");
             langProps.put("back", "Назад");
 
+            //DAYS
+            //Shortened
+            langProps.put("monday_shortened", "Пн");
+            langProps.put("tuesday_shortened", "Вт");
+            langProps.put("wednesday_shortened", "Ср");
+            langProps.put("thursday_shortened", "Чт");
+            langProps.put("friday_shortened", "Пт");
+            langProps.put("saturday_shortened", "Сб");
+            langProps.put("sunday_shortened", "Вс");
+
             //SETTINGS
             langProps.put("settings", "Настройки");
 
-            //VIEW
-            langProps.put("day_off", "На этот день пар нет!: ");
+            //SCHEDULE MENU
+            langProps.put("today", "На сегодня");
+            langProps.put("tomorrow", "На завтра");
+            langProps.put("week", "На неделю");
+            langProps.put("next_week", "На следующую неделю");
+
+            //SCHEDULE
+            langProps.put("schedule", "Расписание");
+            langProps.put("schedule_response", "На когда тебе надо?");
+            langProps.put("time_schedule", "Время звоноков");
+            langProps.put("day_off", "На этот день пар нет!");
             //langProps.put("subject", "Предмет: ");
             langProps.put("class", "Аудитория: ");
             langProps.put("teacher", "Препод: ");
