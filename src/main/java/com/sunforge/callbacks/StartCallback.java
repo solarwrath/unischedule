@@ -24,7 +24,7 @@ public class StartCallback {
         LocalizationBundle localizationBundle = LocalizationBundle.getInstance();
         try {
             CallbackQuery callbackQuery = passedUpdate.getCallbackQuery();
-            UserOperations.changeSubgroup(callbackQuery.getFrom().getId(), chosenSubgroup);
+            UserOperations.changeSubgroup(callbackQuery.getMessage().getChatId(), chosenSubgroup);
 
             SendMessage sndMessage = new SendMessage().setChatId(callbackQuery.getMessage().getChatId()).setText(localizationBundle.getString(LocalizationField.START_WISH));
 

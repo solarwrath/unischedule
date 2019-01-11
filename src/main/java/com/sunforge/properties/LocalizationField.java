@@ -35,7 +35,7 @@ public enum LocalizationField {
     SCHEDULE,
     SCHEDULE_RESPONSE,
     TIME_SCHEDULE,
-    DAYOFF,
+    DAY_OFF,
     SUBJECT,
     CLASS,
     TEACHER,

@@ -1,4 +1,4 @@
-package com.sunforge.commands;
+package com.sunforge.callbacks;
 
 import com.sunforge.UniScheduleBot;
 import com.sunforge.db.ScheduleReader;
@@ -7,30 +7,33 @@ import com.sunforge.properties.LocalizationBundle;
 import com.sunforge.properties.LocalizationField;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.sql.SQLException;
 import java.time.DayOfWeek;
 import java.util.Calendar;
 
-public class DayScheduleCommand {
+import static com.sunforge.callbacks.CommonMethods.editMessageToScheduleMenu;
 
-    private static final Logger logger = LogManager.getLogger(DayScheduleCommand.class);
+public class ScheduleTodayCallback {
+
+    private static final Logger logger = LogManager.getLogger(ScheduleTodayCallback.class);
+    private static final LocalizationBundle localizationBundle = LocalizationBundle.getInstance();
 
     public static void sendDayScheduleMessage(Update passedUpdate) {
-        SendMessage snd = new SendMessage();
-        snd.setChatId(passedUpdate.getMessage().getChatId());
+        EditMessageText editText = new EditMessageText();
+        editText.setChatId(passedUpdate.getCallbackQuery().getMessage().getChatId())
+                .setMessageId(passedUpdate.getCallbackQuery().getMessage().getMessageId());
 
         Calendar calendar = Calendar.getInstance();
         int currentDay = calendar.get(Calendar.DAY_OF_WEEK);
         boolean isEvenWeek = (calendar.get(Calendar.WEEK_OF_YEAR) % 2 == 0);
 
         String textToSend;
-        LocalizationBundle localizationBundle = LocalizationBundle.getInstance();
 
         try {
-            short userSubgroup = UserOperations.getSubgroup(passedUpdate.getMessage().getFrom().getId());
+            short userSubgroup = UserOperations.getSubgroup(passedUpdate.getCallbackQuery().getMessage().getChatId());
             try {
                 switch (currentDay) {
                     case 2:
@@ -48,7 +51,7 @@ public class DayScheduleCommand {
 
                     //If Thursday, Saturday or Sunday, display that it is a day off
                     default:
-                        textToSend = localizationBundle.getString(LocalizationField.DAYOFF);
+                        textToSend = localizationBundle.getString(LocalizationField.DAY_OFF);
                         break;
                 }
             } catch (SQLException e) {
@@ -56,12 +59,13 @@ public class DayScheduleCommand {
                 textToSend = localizationBundle.getString(LocalizationField.ERROR_DB_RETRIEVE_SCHEDULE);
             }
         } catch (SQLException e) {
-            logger.error("Can't get user subgroup. User: " + passedUpdate.getMessage().getFrom().getId(), e);
+            logger.error("Can't get user subgroup. User: " + passedUpdate.getCallbackQuery().getMessage().getChatId(), e);
             textToSend = localizationBundle.getString(LocalizationField.ERROR_DB_RETRIEVE_SUBGROUP);
         }
 
-        snd.setText(textToSend);
+        editText.setText(textToSend);
 
-        UniScheduleBot.getInstance().sendPassedMessage(snd);
+        UniScheduleBot.getInstance().editMessageText(editText);
+        editMessageToScheduleMenu(passedUpdate);
     }
 }

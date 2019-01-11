@@ -34,7 +34,7 @@ public class ScheduleNextWeekMenuCallback {
         rows.add(row);
         inlineKeyboardMarkup.setKeyboard(rows);
         editMessageReplyMarkup.setReplyMarkup(inlineKeyboardMarkup);
-        logger.debug("Create markup for edited message in schedule_next_week for " + passedUpdate.getCallbackQuery().getMessage().getFrom().getId());
+        logger.debug("Create markup for edited message in schedule_next_week for " + passedUpdate.getCallbackQuery().getMessage().getChatId());
 
         UniScheduleBot.getInstance().editReplyMarkupMessage(editMessageReplyMarkup);
     }

@@ -13,7 +13,7 @@ public class ChooseSubgroupCallback {
 
     public static void chooseSubgroupCallback(Update passedUpdate, int chosenSubgroup){
         try {
-            UserOperations.changeSubgroup(passedUpdate.getCallbackQuery().getFrom().getId(), chosenSubgroup);
+            UserOperations.changeSubgroup(passedUpdate.getCallbackQuery().getMessage().getChatId(), chosenSubgroup);
 
 
             //TODO Indicate THE CHANGE

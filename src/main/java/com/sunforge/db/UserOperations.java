@@ -12,33 +12,33 @@ public class UserOperations {
 
     private static final Logger logger = LogManager.getLogger(UserOperations.class);
 
-    public static void initializeUser(long telegramId, String username, String firstName, String lastName) throws SQLException{
-        final String query = "REPLACE INTO users (telegram_id, username, first_name, last_name)" +
-                " VALUES ("+telegramId+", '" +username + "', '" + firstName + "', '" + lastName + "')";
+    public static void initializeUser(long chatId, String username, String firstName, String lastName) throws SQLException{
+        final String query = "REPLACE INTO users (chat_id, username, first_name, last_name)" +
+                " VALUES ("+chatId+", '" +username + "', '" + firstName + "', '" + lastName + "')";
         logger.debug("Trying to execute: " + query);
 
         try(Connection con = DataSource.getConnection();
             PreparedStatement pst = con.prepareStatement(query)
         ){
             pst.execute();
-            logger.debug("Successfully inserted new user: [" + telegramId + "," + username + "," + firstName + "," + lastName+"]");
+            logger.debug("Successfully inserted new user: [" + chatId + "," + username + "," + firstName + "," + lastName+"]");
         }
     }
 
-    public static void changeSubgroup(long telegramId, int chosenSubgroup) throws SQLException{
-        final String query = "UPDATE users SET subgroup=" + chosenSubgroup + " WHERE telegram_id="+telegramId;
+    public static void changeSubgroup(long chatId, int chosenSubgroup) throws SQLException{
+        final String query = "UPDATE users SET subgroup=" + chosenSubgroup + " WHERE chat_id="+chatId;
         logger.debug("Trying to execute: " + query);
 
         try(Connection con = DataSource.getConnection();
             PreparedStatement pst = con.prepareStatement(query)
         ){
             pst.execute();
-            logger.debug("Successfully changed subgroup of user " + telegramId +" to " + chosenSubgroup);
+            logger.debug("Successfully changed subgroup of user " + chatId +" to " + chosenSubgroup);
         }
     }
 
-    public static short getSubgroup(long telegramId) throws SQLException{
-        final String query = "SELECT subgroup FROM users WHERE telegram_id=" + telegramId;
+    public static short getSubgroup(long chatId) throws SQLException{
+        final String query = "SELECT subgroup FROM users WHERE chat_id=" + chatId;
         logger.debug("Trying to execute: " + query);
 
         try(Connection con = DataSource.getConnection();
@@ -47,7 +47,7 @@ public class UserOperations {
         ){
             rs.next();
             short redeemedSubgroup = rs.getShort("subgroup");
-            logger.debug("Successfully redeemed subgroup of user " + telegramId +": " + redeemedSubgroup);
+            logger.debug("Successfully redeemed subgroup of user " + chatId +": " + redeemedSubgroup);
 
             return redeemedSubgroup;
         }

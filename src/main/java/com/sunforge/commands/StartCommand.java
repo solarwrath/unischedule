@@ -27,16 +27,13 @@ public class StartCommand {
         Message passedMessage = passedUpdate.getMessage();
         User currentUser = passedMessage.getFrom();
 
-        long telegramId = currentUser.getId();
         String username = currentUser.getUserName();
         String firstName = currentUser.getFirstName();
         String lastName = currentUser.getLastName();
 
-
-
         try {
             //Create a row in table 'users' in db and populate it with user's id, name and username
-            initializeUser(telegramId, username, firstName, lastName);
+            initializeUser(chat_id, username, firstName, lastName);
 
             //Get greetings message
 
