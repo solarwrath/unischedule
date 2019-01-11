@@ -13,7 +13,7 @@ public class ScheduleReader {
 
     private static final Logger logger = LogManager.getLogger(ScheduleReader.class);
 
-    public static String getScheduleFromDay(DayOfWeek givenDay, boolean isEvenWeek) throws IllegalArgumentException, SQLException {
+    public static String getScheduleFromDay(DayOfWeek givenDay, boolean isEvenWeek, int givenSubgroup) throws IllegalArgumentException, SQLException {
         boolean interpretError = false;
         String interpretedDay = "";
         switch (givenDay) {
@@ -48,13 +48,13 @@ public class ScheduleReader {
 
         logger.debug("Successfuly interpreted day: " + interpretedDay);
 
-        final String queryToSelectSchedule = "SELECT * FROM " + interpretedDay + "_1";
+        final String queryToSelectSchedule = "SELECT * FROM " + interpretedDay + "_" + givenSubgroup;
         try (Connection con = DataSource.getConnection();
              PreparedStatement pst = con.prepareStatement(queryToSelectSchedule);
              ResultSet rs = pst.executeQuery();
         ) {
             logger.debug("Opened all the db stuff connection");
-            StringBuilder stringBuilder = new StringBuilder("------------------------------------------------------------------------------------");
+            StringBuilder stringBuilder = new StringBuilder("----------------------------------------------------------------------\n");
             if(isEvenWeek){
                 while (rs.next()) {
                     int currentOddity = rs.getInt("oddity");
@@ -63,7 +63,7 @@ public class ScheduleReader {
                         stringBuilder.append("Дисципліна: ").append(rs.getString("subject")).append("\n");
                         stringBuilder.append("Аудиторія: ").append(rs.getString("class")).append("\n");
                         stringBuilder.append("Викладач: ").append(rs.getString("teacher")).append("\n");
-                        stringBuilder.append("------------------------------------------------------------------------------------\n");
+                        stringBuilder.append("----------------------------------------------------------------------\n");
                     }
                 }
             }else{
@@ -74,7 +74,7 @@ public class ScheduleReader {
                         stringBuilder.append("Дисципліна: ").append(rs.getString("subject")).append("\n");
                         stringBuilder.append("Аудиторія: ").append(rs.getString("class")).append("\n");
                         stringBuilder.append("Викладач: ").append(rs.getString("teacher")).append("\n");
-                        stringBuilder.append("------------------------------------------------------------------------------------\n");
+                        stringBuilder.append("----------------------------------------------------------------------\n");
                     }
                 }
             }
