@@ -1,6 +1,12 @@
 package com.sunforge;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+
 public class ValidationHandler {
+    private static final Logger logger = LogManager.getLogger(ValidationHandler.class);
+
     protected static boolean validateCommand(String givenString) {
         return (givenString.startsWith("/") && countCharOccurence(givenString, '/') == 1);
     }

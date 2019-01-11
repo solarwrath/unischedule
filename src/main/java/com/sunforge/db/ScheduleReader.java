@@ -1,5 +1,8 @@
 package com.sunforge.db;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,8 +10,10 @@ import java.sql.SQLException;
 import java.time.DayOfWeek;
 
 public class ScheduleReader {
-    public static String getScheduleFromDay(DayOfWeek givenDay) throws IllegalArgumentException{
-        String result = "Error";
+
+    private static final Logger logger = LogManager.getLogger(ScheduleReader.class);
+
+    public static String getScheduleFromDay(DayOfWeek givenDay, boolean isEvenWeek) throws IllegalArgumentException, SQLException {
         boolean interpretError = false;
         String interpretedDay = "";
         switch (givenDay) {
@@ -36,31 +41,52 @@ public class ScheduleReader {
                 interpretError = true;
         }
 
-        if(interpretError){
-            throw new IllegalArgumentException("Доступны только дни с понедельника по пятницу!");
+        if (interpretError) {
+            logger.error("Couldn't resolve day: " + givenDay);
+            throw new IllegalArgumentException("Illegal day passed to interpret!");
         }
+
+        logger.debug("Successfuly interpreted day: " + interpretedDay);
 
         final String queryToSelectSchedule = "SELECT * FROM " + interpretedDay + "_1";
-        try(Connection con = DataSource.getConnection();
-            PreparedStatement pst = con.prepareStatement(queryToSelectSchedule);
-            ResultSet rs = pst.executeQuery();){
-
-            StringBuilder stringBuilder = new StringBuilder();
-            while(rs.next()){
-                stringBuilder.append("scheduleOrder:").append(rs.getInt("scheduleOrder")).append("\n");
-                stringBuilder.append("oddity:").append(rs.getInt("oddity")).append("\n");
-                stringBuilder.append("subject:").append(rs.getString("subject")).append("\n");
-                stringBuilder.append("teacher:").append(rs.getString("teacher")).append("\n");
-                stringBuilder.append("class:").append(rs.getString("class")).append(";");
+        try (Connection con = DataSource.getConnection();
+             PreparedStatement pst = con.prepareStatement(queryToSelectSchedule);
+             ResultSet rs = pst.executeQuery();
+        ) {
+            logger.debug("Opened all the db stuff connection");
+            StringBuilder stringBuilder = new StringBuilder("------------------------------------------------------------------------------------");
+            if(isEvenWeek){
+                while (rs.next()) {
+                    int currentOddity = rs.getInt("oddity");
+                    if(currentOddity == 2 || currentOddity == 3){
+                        //stringBuilder.append("scheduleOrder:").append(rs.getInt("scheduleOrder")).append("\n");
+                        stringBuilder.append("Дисципліна: ").append(rs.getString("subject")).append("\n");
+                        stringBuilder.append("Аудиторія: ").append(rs.getString("class")).append("\n");
+                        stringBuilder.append("Викладач: ").append(rs.getString("teacher")).append("\n");
+                        stringBuilder.append("------------------------------------------------------------------------------------\n");
+                    }
+                }
+            }else{
+                while (rs.next()) {
+                    int currentOddity = rs.getInt("oddity");
+                    if(currentOddity == 1 || currentOddity == 3){
+                        //stringBuilder.append("scheduleOrder:").append(rs.getInt("scheduleOrder")).append("\n");
+                        stringBuilder.append("Дисципліна: ").append(rs.getString("subject")).append("\n");
+                        stringBuilder.append("Аудиторія: ").append(rs.getString("class")).append("\n");
+                        stringBuilder.append("Викладач: ").append(rs.getString("teacher")).append("\n");
+                        stringBuilder.append("------------------------------------------------------------------------------------\n");
+                    }
+                }
             }
 
-            result = stringBuilder.toString();
+            logger.debug("Created a schedule from query: " + queryToSelectSchedule);
 
-        }catch (SQLException e){
-                e.printStackTrace();
-                result = "Error";
+            return stringBuilder.toString();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            logger.error("Something went bad with db stuff. Query: " + queryToSelectSchedule);
+            throw new SQLException("Something went bad with db stuff. Query: " + queryToSelectSchedule);
         }
-
-        return result;
     }
 }

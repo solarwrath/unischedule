@@ -1,5 +1,8 @@
 package com.sunforge.properties;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,6 +11,8 @@ import java.util.Properties;
 
 public class PropertiesStorage {
 
+    private static final Logger logger = LogManager.getLogger(PropertiesStorage.class);
+
     private static String rootPath;
     private static final String STANDARD_MESSAGES_RELATIVE_PATH = "standardMessages.properties";
     private static final String DATABASE_AUTHENTICATION_RELATIVE_PATH = "databaseAuthentication.properties";
@@ -15,7 +20,9 @@ public class PropertiesStorage {
     static {
         try{
             rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath() + "properties/";
+            logger.debug("Successfully redeemed root path of properties");
         }catch (NullPointerException e){
+            logger.error("Couldn't get properties root path");
             e.printStackTrace();
         }
     }
@@ -29,6 +36,7 @@ public class PropertiesStorage {
             standardMessages = new Properties();
             FileInputStream input = new FileInputStream(rootPath+STANDARD_MESSAGES_RELATIVE_PATH);
             standardMessages.load(new InputStreamReader(input, Charset.forName("UTF-8")));
+            logger.debug("Successfully loaded standardMessages properties");
         }
         return standardMessages;
     }
@@ -42,6 +50,7 @@ public class PropertiesStorage {
             databaseAuthentication = new Properties();
             FileInputStream input = new FileInputStream(rootPath+DATABASE_AUTHENTICATION_RELATIVE_PATH);
             databaseAuthentication.load(new InputStreamReader(input, Charset.forName("UTF-8")));
+            logger.trace("Successfully loaded databaseAuthentication properties");
         }
         return databaseAuthentication;
     }
