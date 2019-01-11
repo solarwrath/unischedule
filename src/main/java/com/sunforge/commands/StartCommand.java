@@ -51,8 +51,8 @@ public class StartCommand {
             List<List<InlineKeyboardButton>> rows = new ArrayList<>();
             List<InlineKeyboardButton> row = new ArrayList<>();
 
-            row.add(new InlineKeyboardButton().setText(localizationBundle.getString(LocalizationField.FIRST_SUBGROUP)).setCallbackData("choose_subgroup_first"));
-            row.add(new InlineKeyboardButton().setText(localizationBundle.getString(LocalizationField.SECOND_SUBGROUP)).setCallbackData("choose_subgroup_second"));
+            row.add(new InlineKeyboardButton().setText(localizationBundle.getString(LocalizationField.FIRST_SUBGROUP)).setCallbackData("start_subgroup_first"));
+            row.add(new InlineKeyboardButton().setText(localizationBundle.getString(LocalizationField.SECOND_SUBGROUP)).setCallbackData("start_subgroup_second"));
 
             rows.add(row);
 

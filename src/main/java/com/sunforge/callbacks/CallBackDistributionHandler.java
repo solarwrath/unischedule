@@ -5,7 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import static com.sunforge.callbacks.ChooseSubgroupCallback.chooseSubgroupCallback;
+import static com.sunforge.callbacks.StartCallback.startCallback;
 
 public class CallBackDistributionHandler {
 
@@ -15,17 +15,21 @@ public class CallBackDistributionHandler {
         String call_data = passedUpdate.getCallbackQuery().getData();
 
         switch (call_data) {
-            case "choose_subgroup_first":
-                logger.debug("Got choose first subgroup callback query");
-                chooseSubgroupCallback(passedUpdate, 1);
+            case "start_subgroup_first":
+                logger.debug("Got start_subgroup_first callback query");
+                startCallback(passedUpdate, 1);
                 break;
-            case "choose_subgroup_second":
-                logger.debug("Got choose second subgroup callback query");
-                chooseSubgroupCallback(passedUpdate, 2);
+            case "start_subgroup_second":
+                logger.debug("Got start_subgroup_second callback query");
+                startCallback(passedUpdate, 2);
                 break;
-            case "settings_back":
-                logger.debug("Got settings_back callback query");
-                SettingsBackCallback.settingsBack(passedUpdate);
+            case "schedule_week":
+                logger.debug("Got schedule_week callback query");
+                ScheduleWeekMenuCallback.changeKeyboardToDays(passedUpdate);
+                break;
+            case "schedule_next_week":
+                logger.debug("Got schedule_next_week callback query");
+                ScheduleNextWeekMenuCallback.changeKeyboardToDays(passedUpdate);
                 break;
             default:
                 logger.error("Got unknown callback_query: " + call_data);

@@ -15,6 +15,7 @@ public class ChooseSubgroupCallback {
         try {
             UserOperations.changeSubgroup(passedUpdate.getCallbackQuery().getFrom().getId(), chosenSubgroup);
 
+
             //TODO Indicate THE CHANGE
         }catch (SQLException e){
             //TODO HANDLE THIS

@@ -13,16 +13,15 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 import java.util.ArrayList;
 import java.util.List;
 
-public class SettingsCommand {
+public class ScheduleCommand {
+    private static final LocalizationBundle localizationBundle = LocalizationBundle.getInstance();
+    private static final Logger logger = LogManager.getLogger(ScheduleCommand.class);
 
-    private static final Logger logger = LogManager.getLogger(SettingsCommand.class);
-
-    protected static void sendSettingsKeyboard(Update passedUpdate) {
-        LocalizationBundle localizationBundle = LocalizationBundle.getInstance();
+    public static void sendSceduleMarkup(Update passedUpdate){
 
         SendMessage snd = new SendMessage()
                 .setChatId(passedUpdate.getMessage().getChatId())
-                .setText(localizationBundle.getString(LocalizationField.SETTINGS));
+                .setText(localizationBundle.getString(LocalizationField.SCHEDULE_RESPONSE));
 
         logger.debug("Created SendMessage", snd);
 
@@ -30,10 +29,18 @@ public class SettingsCommand {
         List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
 
         List<InlineKeyboardButton> firstRow = new ArrayList<>();
-        firstRow.add(new InlineKeyboardButton().setText(localizationBundle.getString(LocalizationField.FIRST_SUBGROUP)).setCallbackData("choose_subgroup_first"));
-        firstRow.add(new InlineKeyboardButton().setText(localizationBundle.getString(LocalizationField.SECOND_SUBGROUP)).setCallbackData("choose_subgroup_second"));
+        firstRow.add(new InlineKeyboardButton().setText(localizationBundle.getString(LocalizationField.TODAY)).setCallbackData("schedule_today"));
+        firstRow.add(new InlineKeyboardButton().setText(localizationBundle.getString(LocalizationField.TOMORROW)).setCallbackData("schedule_tomorrow"));
+
+        List<InlineKeyboardButton> secondRow = new ArrayList<>();
+        secondRow.add(new InlineKeyboardButton().setText(localizationBundle.getString(LocalizationField.WEEK)).setCallbackData("schedule_week"));;
+
+        List<InlineKeyboardButton> thirdRow = new ArrayList<>();
+        thirdRow.add(new InlineKeyboardButton().setText(localizationBundle.getString(LocalizationField.NEXT_WEEK)).setCallbackData("schedule_next_week"));
 
         rowsInline.add(firstRow);
+        rowsInline.add(secondRow);
+        rowsInline.add(thirdRow);
 
         markupInline.setKeyboard(rowsInline);
         snd.setReplyMarkup(markupInline);

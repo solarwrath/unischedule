@@ -16,12 +16,12 @@ public class CommandDistributionHandler {
                 logger.info("Got /start command");
                 StartCommand.handleStartCommand(passedUpdate);
                 break;
-            case "/daySchedule":
-                logger.info("Got /daySchedule command");
-                DayScheduleCommand.sendDayScheduleMessage(passedUpdate);
+            case "Расписание":
+                logger.info("Got Расписание command");
+                ScheduleCommand.sendSceduleMarkup(passedUpdate);
                 break;
-            case "/settings":
-                logger.info("Got /settings command");
+            case "Настройки":
+                logger.info("Got Настройки command");
                 SettingsCommand.sendSettingsKeyboard(passedUpdate);
                 break;
             default:
