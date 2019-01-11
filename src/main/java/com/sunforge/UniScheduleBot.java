@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
@@ -62,10 +63,21 @@ public class UniScheduleBot extends TelegramLongPollingBot{
             e.printStackTrace();
         }
     }
+
     public void deleteMessage(DeleteMessage passedMessage){
         try{
             execute(passedMessage);
             logger.debug("Deleted message in the dialog with user " + passedMessage.getChatId()+ ". Message id: " + passedMessage.getMessageId());
+        } catch (TelegramApiException e) {
+            logger.error("Telegram stuff fucked up");
+            e.printStackTrace();
+        }
+    }
+
+    public void editReplyMarkupMessage(EditMessageReplyMarkup passedMessage){
+        try{
+            execute(passedMessage);
+            logger.debug("Edited message in the dialog with user " + passedMessage.getChatId()+ ". Message id: " + passedMessage.getMessageId());
         } catch (TelegramApiException e) {
             logger.error("Telegram stuff fucked up");
             e.printStackTrace();
