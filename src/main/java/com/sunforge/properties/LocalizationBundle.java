@@ -31,7 +31,7 @@ public class LocalizationBundle {
 
             //VIEW
             langProps.put("day_off", "На этот день пар нет!: ");
-            langProps.put("subject", "Предмет: ");
+            //langProps.put("subject", "Предмет: ");
             langProps.put("class", "Аудитория: ");
             langProps.put("teacher", "Препод: ");
 

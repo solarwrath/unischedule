@@ -1,5 +1,7 @@
 package com.sunforge.db;
 
+import com.sunforge.properties.LocalizationBundle;
+import com.sunforge.properties.LocalizationField;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -53,31 +55,39 @@ public class ScheduleReader {
              PreparedStatement pst = con.prepareStatement(queryToSelectSchedule);
              ResultSet rs = pst.executeQuery();
         ) {
+            LocalizationBundle localizationBundle = LocalizationBundle.getInstance();
             logger.debug("Opened all the db stuff connection");
-            StringBuilder stringBuilder = new StringBuilder("--------------------------------------------------------------\n");
-            if(isEvenWeek){
+            StringBuilder stringBuilder = new StringBuilder();
+            if (isEvenWeek) {
                 while (rs.next()) {
-                    int currentOddity = rs.getInt("oddity");
-                    if(currentOddity == 2 || currentOddity == 3){
-                        //stringBuilder.append("scheduleOrder:").append(rs.getInt("scheduleOrder")).append("\n");
-                        stringBuilder.append("Дисципліна: ").append(rs.getString("subject")).append("\n");
-                        stringBuilder.append("Аудиторія: ").append(rs.getString("class")).append("\n");
-                        stringBuilder.append("Викладач: ").append(rs.getString("teacher")).append("\n");
-                        stringBuilder.append("--------------------------------------------------------------\n");
+                    short currentOddity = rs.getShort("oddity");
+                    if (currentOddity == 2 || currentOddity == 3) {
+                        stringBuilder.append("------------------------------").append(rs.getShort("scheduleOrder")).append("------------------------------").append("\n");
+                        if (rs.getString("subject").equals("-")) {
+                            stringBuilder.append("\n                        Пары нет\n⠀\n");
+                        } else {
+                            stringBuilder.append(rs.getString("subject")).append("\n");
+                            stringBuilder.append(localizationBundle.getString(LocalizationField.CLASS)).append(rs.getString("class")).append("\n");
+                            stringBuilder.append(localizationBundle.getString(LocalizationField.TEACHER)).append(rs.getString("teacher")).append("\n");
+                        }
                     }
                 }
-            }else{
+            } else {
                 while (rs.next()) {
-                    int currentOddity = rs.getInt("oddity");
-                    if(currentOddity == 1 || currentOddity == 3){
-                        //stringBuilder.append("scheduleOrder:").append(rs.getInt("scheduleOrder")).append("\n");
-                        stringBuilder.append("Дисципліна: ").append(rs.getString("subject")).append("\n");
-                        stringBuilder.append("Аудиторія: ").append(rs.getString("class")).append("\n");
-                        stringBuilder.append("Викладач: ").append(rs.getString("teacher")).append("\n");
-                        stringBuilder.append("--------------------------------------------------------------\n");
+                    short currentOddity = rs.getShort("oddity");
+                    if (currentOddity == 1 || currentOddity == 3) {
+                        if (rs.getString("subject").equals("-")) {
+                            stringBuilder.append("\n                        Пары нет\n⠀\n");
+                        } else {
+                            stringBuilder.append("------------------------------").append(rs.getShort("scheduleOrder")).append("------------------------------").append("\n");
+                            stringBuilder.append(rs.getString("subject")).append("\n");
+                            stringBuilder.append(localizationBundle.getString(LocalizationField.CLASS)).append(rs.getString("class")).append("\n");
+                            stringBuilder.append(localizationBundle.getString(LocalizationField.TEACHER)).append(rs.getString("teacher")).append("\n");
+                        }
                     }
                 }
             }
+            stringBuilder.append("-------------------------------------------------------------\n");
 
             logger.debug("Created a schedule from query: " + queryToSelectSchedule);
 
