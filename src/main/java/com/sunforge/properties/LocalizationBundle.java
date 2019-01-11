@@ -53,46 +53,15 @@ public class LocalizationBundle {
     }
 
     public String getString(LocalizationField localizationField){
-        logger.debug("Trying to get localization string: ", localizationField);
-        switch (localizationField){
-            ///start
-            case START_CHOOSE_SUBGROUP:
-                return langProps.getProperty("start_choose_subgroup");
+        logger.debug("Trying to get localization string: "+ localizationField.name());
+        String retrievedString = langProps.getProperty(localizationField.name().toLowerCase());
 
-            //General
-            case FIRST_SUBGROUP:
-                return langProps.getProperty("first_subgroup");
-            case SECOND_SUBGROUP:
-                return langProps.getProperty("second_subgroup");
-            case BACK:
-                return langProps.getProperty("back");
-
-            //Settings
-            case SETTINGS:
-                return langProps.getProperty("settings");
-
-            //Schedule
-            case DAYOFF:
-                return langProps.getProperty("day_off");
-            case SUBJECT:
-                return langProps.getProperty("subject");
-            case CLASS:
-                return langProps.getProperty("class");
-            case TEACHER:
-                return langProps.getProperty("teacher");
-
-            //Errors
-            case ERROR_DB_RETRIEVE_SUBGROUP:
-                return langProps.getProperty("error_db_retrieve_subgroup");
-            case ERROR_DB_RETRIEVE_SCHEDULE:
-                return langProps.getProperty("error_db_retrieve_schedule");
-            case ERROR_INPUT_INVALID_COMMAND:
-                return langProps.getProperty("error_input_invalid_command");
-            case ERROR_INPUT_INVALID_CALLBACK:
-                return langProps.getProperty("error_input_invalid_callback");
+        if(retrievedString.length() > 0){
+            logger.debug("Successfully redeemed localization string: " + localizationField.name());
+            return retrievedString;
         }
 
-        logger.error("Invalid LocalizationField, can't get string: ", localizationField);
+        logger.error("Invalid LocalizationField, can't get string: ", localizationField.name());
         return "ОШИБКА! Нет предустанновленой строчки локализации. Напиши Тохе!";
     }
 }
