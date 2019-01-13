@@ -5,6 +5,7 @@ import com.sunforge.properties.LocalizationBundle;
 import com.sunforge.properties.LocalizationField;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
@@ -18,7 +19,6 @@ public class ScheduleMenu {
     private static final Logger logger = LogManager.getLogger(ScheduleMenu.class);
 
     protected static void sendScheduleMenuKeyboard(Update passedUpdate) {
-
         EditMessageText edit = new EditMessageText()
                 .setChatId(passedUpdate.getCallbackQuery().getMessage().getChatId())
                 .setMessageId(passedUpdate.getCallbackQuery().getMessage().getMessageId())
@@ -32,7 +32,7 @@ public class ScheduleMenu {
         firstRow.add(new InlineKeyboardButton().setText(localizationBundle.getString(LocalizationField.TOMORROW)).setCallbackData("schedule_tomorrow"));
 
         List<InlineKeyboardButton> secondRow = new ArrayList<>();
-        secondRow.add(new InlineKeyboardButton().setText(localizationBundle.getString(LocalizationField.WEEK)).setCallbackData("schedule_week"));;
+        secondRow.add(new InlineKeyboardButton().setText(localizationBundle.getString(LocalizationField.WEEK)).setCallbackData("schedule_week"));
 
         List<InlineKeyboardButton> thirdRow = new ArrayList<>();
         thirdRow.add(new InlineKeyboardButton().setText(localizationBundle.getString(LocalizationField.NEXT_WEEK)).setCallbackData("schedule_next_week"));
@@ -45,5 +45,43 @@ public class ScheduleMenu {
         edit.setReplyMarkup(markupInline);
 
         UniScheduleBot.getInstance().editMessageText(edit);
+    }
+
+    protected static void addWeekBack(Update passedUpdate) {
+        EditMessageReplyMarkup edit = new EditMessageReplyMarkup()
+                .setChatId(passedUpdate.getCallbackQuery().getMessage().getChatId())
+                .setMessageId(passedUpdate.getCallbackQuery().getMessage().getMessageId());
+
+        InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
+
+        List<InlineKeyboardButton> row = new ArrayList<>();
+        row.add(new InlineKeyboardButton().setText(localizationBundle.getString(LocalizationField.BACK)).setCallbackData("schedule_week"));
+
+        rowsInline.add(row);
+
+        markupInline.setKeyboard(rowsInline);
+        edit.setReplyMarkup(markupInline);
+
+        UniScheduleBot.getInstance().editReplyMarkupMessage(edit);
+    }
+
+    protected static void addNextWeekBack(Update passedUpdate) {
+        EditMessageReplyMarkup edit = new EditMessageReplyMarkup()
+                .setChatId(passedUpdate.getCallbackQuery().getMessage().getChatId())
+                .setMessageId(passedUpdate.getCallbackQuery().getMessage().getMessageId());
+
+        InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
+
+        List<InlineKeyboardButton> row = new ArrayList<>();
+        row.add(new InlineKeyboardButton().setText(localizationBundle.getString(LocalizationField.BACK)).setCallbackData("schedule_next_week"));
+
+        rowsInline.add(row);
+
+        markupInline.setKeyboard(rowsInline);
+        edit.setReplyMarkup(markupInline);
+
+        UniScheduleBot.getInstance().editReplyMarkupMessage(edit);
     }
 }
