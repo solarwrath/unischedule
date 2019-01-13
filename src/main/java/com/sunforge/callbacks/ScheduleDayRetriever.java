@@ -23,13 +23,12 @@ public class ScheduleDayRetriever {
     private static final Logger logger = LogManager.getLogger(ScheduleDayRetriever.class);
     private static final LocalizationBundle localizationBundle = LocalizationBundle.getInstance();
 
-    public static void sendDayScheduleMessage(Update passedUpdate, int currentDay, boolean isEvenWeek) {
-        EditMessageText editText = new EditMessageText();
-        editText.setChatId(passedUpdate.getCallbackQuery().getMessage().getChatId())
-                .setMessageId(passedUpdate.getCallbackQuery().getMessage().getMessageId());
+    private static void sendDayScheduleMessage(Update passedUpdate, int currentDay, boolean isEvenWeek) {
+        EditMessageText editText = new EditMessageText().
+                setChatId(passedUpdate.getCallbackQuery().getMessage().getChatId()).
+                setMessageId(passedUpdate.getCallbackQuery().getMessage().getMessageId());
 
         String textToSend;
-
         try {
             short userSubgroup = UserOperations.getSubgroup(passedUpdate.getCallbackQuery().getMessage().getChatId());
             try {
@@ -66,7 +65,8 @@ public class ScheduleDayRetriever {
         UniScheduleBot.getInstance().editMessageText(editText);
     }
 
-    public static void sendTodaySchedule(Update passedUpdate){
+
+    static void sendTodaySchedule(Update passedUpdate) {
         Calendar calendar = Calendar.getInstance();
         int currentDay = calendar.get(Calendar.DAY_OF_WEEK);
         boolean isEvenWeek = (calendar.get(Calendar.WEEK_OF_YEAR) % 2 == 0);
@@ -75,7 +75,7 @@ public class ScheduleDayRetriever {
         editMessageToScheduleMenu(passedUpdate);
     }
 
-    public static void sendTomorrowSchedule(Update passedUpdate){
+    static void sendTomorrowSchedule(Update passedUpdate) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, 1);
         int currentDay = calendar.get(Calendar.DAY_OF_WEEK);
@@ -85,7 +85,7 @@ public class ScheduleDayRetriever {
         editMessageToScheduleMenu(passedUpdate);
     }
 
-    public static void sendMondaySchedule(Update passedUpdate){
+    static void sendMondaySchedule(Update passedUpdate) {
         Calendar calendar = Calendar.getInstance();
         int currentDay = Calendar.MONDAY;
         boolean isEvenWeek = (calendar.get(Calendar.WEEK_OF_YEAR) % 2 == 0);
@@ -94,7 +94,7 @@ public class ScheduleDayRetriever {
         addWeekBack(passedUpdate);
     }
 
-    public static void sendTuesdaySchedule(Update passedUpdate){
+    static void sendTuesdaySchedule(Update passedUpdate) {
         Calendar calendar = Calendar.getInstance();
         int currentDay = Calendar.TUESDAY;
         boolean isEvenWeek = (calendar.get(Calendar.WEEK_OF_YEAR) % 2 == 0);
@@ -103,7 +103,7 @@ public class ScheduleDayRetriever {
         addWeekBack(passedUpdate);
     }
 
-    public static void sendWednesdaySchedule(Update passedUpdate){
+    static void sendWednesdaySchedule(Update passedUpdate) {
         Calendar calendar = Calendar.getInstance();
         int currentDay = Calendar.WEDNESDAY;
         boolean isEvenWeek = (calendar.get(Calendar.WEEK_OF_YEAR) % 2 == 0);
@@ -112,7 +112,7 @@ public class ScheduleDayRetriever {
         addWeekBack(passedUpdate);
     }
 
-    public static void sendThursdaySchedule(Update passedUpdate){
+    static void sendThursdaySchedule(Update passedUpdate) {
         Calendar calendar = Calendar.getInstance();
         int currentDay = Calendar.THURSDAY;
         boolean isEvenWeek = (calendar.get(Calendar.WEEK_OF_YEAR) % 2 == 0);
@@ -121,7 +121,7 @@ public class ScheduleDayRetriever {
         addWeekBack(passedUpdate);
     }
 
-    public static void sendFridaySchedule(Update passedUpdate){
+    static void sendFridaySchedule(Update passedUpdate) {
         Calendar calendar = Calendar.getInstance();
         int currentDay = Calendar.FRIDAY;
         boolean isEvenWeek = (calendar.get(Calendar.WEEK_OF_YEAR) % 2 == 0);
@@ -130,7 +130,7 @@ public class ScheduleDayRetriever {
         addWeekBack(passedUpdate);
     }
 
-    public static void sendSaturdaySchedule(Update passedUpdate){
+    static void sendSaturdaySchedule(Update passedUpdate) {
         Calendar calendar = Calendar.getInstance();
         int currentDay = Calendar.SATURDAY;
         boolean isEvenWeek = (calendar.get(Calendar.WEEK_OF_YEAR) % 2 == 0);
@@ -139,7 +139,7 @@ public class ScheduleDayRetriever {
         addWeekBack(passedUpdate);
     }
 
-    public static void sendSundaySchedule(Update passedUpdate){
+    static void sendSundaySchedule(Update passedUpdate) {
         Calendar calendar = Calendar.getInstance();
         int currentDay = Calendar.SUNDAY;
         boolean isEvenWeek = (calendar.get(Calendar.WEEK_OF_YEAR) % 2 == 0);
@@ -147,7 +147,8 @@ public class ScheduleDayRetriever {
         sendDayScheduleMessage(passedUpdate, currentDay, isEvenWeek);
         addWeekBack(passedUpdate);
     }
-    public static void sendNextMondaySchedule(Update passedUpdate){
+
+    static void sendNextMondaySchedule(Update passedUpdate) {
         Calendar calendar = Calendar.getInstance();
         int currentDay = Calendar.MONDAY;
         boolean isEvenWeek = !(calendar.get(Calendar.WEEK_OF_YEAR) % 2 == 0);
@@ -156,7 +157,7 @@ public class ScheduleDayRetriever {
         addNextWeekBack(passedUpdate);
     }
 
-    public static void sendNextTuesdaySchedule(Update passedUpdate){
+    static void sendNextTuesdaySchedule(Update passedUpdate) {
         Calendar calendar = Calendar.getInstance();
         int currentDay = Calendar.TUESDAY;
         boolean isEvenWeek = !(calendar.get(Calendar.WEEK_OF_YEAR) % 2 == 0);
@@ -165,7 +166,7 @@ public class ScheduleDayRetriever {
         addNextWeekBack(passedUpdate);
     }
 
-    public static void sendNextWednesdaySchedule(Update passedUpdate){
+    static void sendNextWednesdaySchedule(Update passedUpdate) {
         Calendar calendar = Calendar.getInstance();
         int currentDay = Calendar.WEDNESDAY;
         boolean isEvenWeek = !(calendar.get(Calendar.WEEK_OF_YEAR) % 2 == 0);
@@ -174,7 +175,7 @@ public class ScheduleDayRetriever {
         addNextWeekBack(passedUpdate);
     }
 
-    public static void sendNextThursdaySchedule(Update passedUpdate){
+    public static void sendNextThursdaySchedule(Update passedUpdate) {
         Calendar calendar = Calendar.getInstance();
         int currentDay = Calendar.THURSDAY;
         boolean isEvenWeek = !(calendar.get(Calendar.WEEK_OF_YEAR) % 2 == 0);
@@ -183,7 +184,7 @@ public class ScheduleDayRetriever {
         addNextWeekBack(passedUpdate);
     }
 
-    public static void sendNextFridaySchedule(Update passedUpdate){
+    static void sendNextFridaySchedule(Update passedUpdate) {
         Calendar calendar = Calendar.getInstance();
         int currentDay = Calendar.FRIDAY;
         boolean isEvenWeek = !(calendar.get(Calendar.WEEK_OF_YEAR) % 2 == 0);
@@ -192,7 +193,7 @@ public class ScheduleDayRetriever {
         addNextWeekBack(passedUpdate);
     }
 
-    public static void sendNextSaturdaySchedule(Update passedUpdate){
+    static void sendNextSaturdaySchedule(Update passedUpdate) {
         Calendar calendar = Calendar.getInstance();
         int currentDay = Calendar.SATURDAY;
         boolean isEvenWeek = !(calendar.get(Calendar.WEEK_OF_YEAR) % 2 == 0);
@@ -201,7 +202,7 @@ public class ScheduleDayRetriever {
         addNextWeekBack(passedUpdate);
     }
 
-    public static void sendNextSundaySchedule(Update passedUpdate){
+    static void sendNextSundaySchedule(Update passedUpdate) {
         Calendar calendar = Calendar.getInstance();
         int currentDay = Calendar.SUNDAY;
         boolean isEvenWeek = !(calendar.get(Calendar.WEEK_OF_YEAR) % 2 == 0);
