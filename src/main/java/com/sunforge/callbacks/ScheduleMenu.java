@@ -14,11 +14,11 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 import java.util.ArrayList;
 import java.util.List;
 
-public class ScheduleMenu {
-    private static final LocalizationBundle localizationBundle = LocalizationBundle.getInstance();
+class ScheduleMenu {
     private static final Logger logger = LogManager.getLogger(ScheduleMenu.class);
+    private static final LocalizationBundle localizationBundle = LocalizationBundle.getInstance();
 
-    protected static void sendScheduleMenuKeyboard(Update passedUpdate) {
+    static void sendScheduleMenuKeyboard(Update passedUpdate) {
         EditMessageText edit = new EditMessageText()
                 .setChatId(passedUpdate.getCallbackQuery().getMessage().getChatId())
                 .setMessageId(passedUpdate.getCallbackQuery().getMessage().getMessageId())
@@ -44,10 +44,11 @@ public class ScheduleMenu {
         markupInline.setKeyboard(rowsInline);
         edit.setReplyMarkup(markupInline);
 
+        logger.debug("Editing message to ScheduleMenu");
         UniScheduleBot.getInstance().editMessageText(edit);
     }
 
-    protected static void addWeekBack(Update passedUpdate) {
+    static void addWeekBack(Update passedUpdate) {
         EditMessageReplyMarkup edit = new EditMessageReplyMarkup()
                 .setChatId(passedUpdate.getCallbackQuery().getMessage().getChatId())
                 .setMessageId(passedUpdate.getCallbackQuery().getMessage().getMessageId());
@@ -63,10 +64,11 @@ public class ScheduleMenu {
         markupInline.setKeyboard(rowsInline);
         edit.setReplyMarkup(markupInline);
 
+        logger.debug("Adding Back button to schedule_week");
         UniScheduleBot.getInstance().editReplyMarkupMessage(edit);
     }
 
-    protected static void addNextWeekBack(Update passedUpdate) {
+    static void addNextWeekBack(Update passedUpdate) {
         EditMessageReplyMarkup edit = new EditMessageReplyMarkup()
                 .setChatId(passedUpdate.getCallbackQuery().getMessage().getChatId())
                 .setMessageId(passedUpdate.getCallbackQuery().getMessage().getMessageId());
@@ -82,6 +84,7 @@ public class ScheduleMenu {
         markupInline.setKeyboard(rowsInline);
         edit.setReplyMarkup(markupInline);
 
+        logger.debug("Adding Back button to schedule_next_week");
         UniScheduleBot.getInstance().editReplyMarkupMessage(edit);
     }
 }
