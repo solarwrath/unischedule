@@ -16,6 +16,8 @@ import static com.sunforge.commands.CommandDistributionHandler.handleCommand;
 
 public class UniScheduleBot extends TelegramLongPollingBot{
 
+    private static final Logger logger = LogManager.getLogger(UniScheduleBot.class);
+
     private UniScheduleBot(){}
 
     private static UniScheduleBot instance;
@@ -26,8 +28,6 @@ public class UniScheduleBot extends TelegramLongPollingBot{
         }
         return instance;
     }
-
-    private static final Logger logger = LogManager.getLogger(UniScheduleBot.class);
 
     @Override
     public void onUpdateReceived(Update update) {

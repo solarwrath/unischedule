@@ -24,6 +24,10 @@ public class CommandDistributionHandler {
                 logger.info("Got Настройки command");
                 SettingsCommand.sendSettingsKeyboard(passedUpdate);
                 break;
+            case "Время звонков":
+                logger.info("Got Время звонков command");
+                TimeCommand.sendTimeMessage(passedUpdate);
+                break;
             default:
                 logger.warn("Can't interpret passed command");
                 UnknownCommand.sendUnknownCommandMessage(passedUpdate);
