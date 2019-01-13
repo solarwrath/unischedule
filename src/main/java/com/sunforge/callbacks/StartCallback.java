@@ -16,21 +16,26 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StartCallback {
+class StartCallback {
 
     private static final Logger logger = LogManager.getLogger(StartCallback.class);
+    private static final LocalizationBundle localizationBundle = LocalizationBundle.getInstance();
 
-    public static void startCallback(Update passedUpdate, int chosenSubgroup){
-        LocalizationBundle localizationBundle = LocalizationBundle.getInstance();
+    static void startCallback(Update passedUpdate, int chosenSubgroup){
         try {
             CallbackQuery callbackQuery = passedUpdate.getCallbackQuery();
             UserOperations.changeSubgroup(callbackQuery.getMessage().getChatId(), chosenSubgroup);
 
-            SendMessage sndMessage = new SendMessage().setChatId(callbackQuery.getMessage().getChatId()).setText(localizationBundle.getString(LocalizationField.START_WISH));
+            SendMessage sndMessage = new SendMessage().
+                                        setChatId(callbackQuery.getMessage().getChatId()).
+                                        setText(localizationBundle.getString(LocalizationField.START_WISH));
 
             ReplyKeyboardMarkup replyKeyboard = new ReplyKeyboardMarkup();
             List<KeyboardRow> listOfRows = new ArrayList<>();
 
+            //Main keyboard with 2 rows
+            //          Schedule
+            //Time Schedule / Settings
             KeyboardRow firstRow = new KeyboardRow();
             firstRow.add(localizationBundle.getString(LocalizationField.SCHEDULE));
 
@@ -44,12 +49,15 @@ public class StartCallback {
             replyKeyboard.setKeyboard(listOfRows);
             sndMessage.setReplyMarkup(replyKeyboard);
 
-            UniScheduleBot.getInstance().sendPassedMessage(sndMessage);
-
-            //TODO Indicate THE CHANGE
+            UniScheduleBot.getInstance().sendMessage(sndMessage);
         }catch (SQLException e){
             //TODO HANDLE THIS
             e.printStackTrace();
+            logger.error("Couldn't change subgroup of user" + passedUpdate.getCallbackQuery().getMessage().getChatId(), e);
+            SendMessage snd = new SendMessage()
+                    .setChatId(passedUpdate.getCallbackQuery().getMessage().getChatId())
+                    .setText(localizationBundle.getString(LocalizationField.ERROR_DB_RETRIEVE_SUBGROUP));
+            UniScheduleBot.getInstance().sendMessage(snd);
         }
     }
 }
