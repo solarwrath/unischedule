@@ -5,8 +5,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import static com.sunforge.callbacks.ScheduleTodayCallback.sendDayScheduleMessage;
-import static com.sunforge.callbacks.ScheduleTomorrowCallback.sendTomorrowDayScheduleMessage;
 import static com.sunforge.callbacks.StartCallback.startCallback;
 
 public class CallBackDistributionHandler {
@@ -31,19 +29,59 @@ public class CallBackDistributionHandler {
                 break;
             case "schedule_today":
                 logger.debug("Got schedule_today callback query");
-                sendDayScheduleMessage(passedUpdate);
+                ScheduleDayRetriever.sendTodaySchedule(passedUpdate);
                 break;
             case "schedule_tomorrow":
                 logger.debug("Got schedule_tomorrow callback query");
-                sendTomorrowDayScheduleMessage(passedUpdate);
+                ScheduleDayRetriever.sendTomorrowSchedule(passedUpdate);
                 break;
             case "schedule_week":
                 logger.debug("Got schedule_week callback query");
                 ScheduleWeekMenuCallback.changeKeyboardToDays(passedUpdate);
                 break;
+            case "schedule_week_monday":
+                logger.debug("Got schedule_week_monday callback query");
+                ScheduleDayRetriever.sendMondaySchedule(passedUpdate);
+                break;
+            case "schedule_week_tuesday":
+                logger.debug("Got schedule_week_tuesday callback query");
+                ScheduleDayRetriever.sendTuesdaySchedule(passedUpdate);
+                break;
+            case "schedule_week_wednesday":
+                logger.debug("Got schedule_week_wednesday callback query");
+                ScheduleDayRetriever.sendWednesdaySchedule(passedUpdate);
+                break;
+            case "schedule_week_friday":
+                logger.debug("Got schedule_week_friday callback query");
+                ScheduleDayRetriever.sendFridaySchedule(passedUpdate);
+                break;
             case "schedule_next_week":
                 logger.debug("Got schedule_next_week callback query");
                 ScheduleNextWeekMenuCallback.changeKeyboardToDays(passedUpdate);
+                break;
+            case "schedule_next_week_monday":
+                logger.debug("Got schedule_next_week_monday callback query");
+                ScheduleDayRetriever.sendNextMondaySchedule(passedUpdate);
+                break;
+            case "schedule_next_week_tuesday":
+                logger.debug("Got schedule_next_week_tuesday callback query");
+                ScheduleDayRetriever.sendNextTuesdaySchedule(passedUpdate);
+                break;
+            case "schedule_next_week_wednesday":
+                logger.debug("Got schedule_next_week_wednesday callback query");
+                ScheduleDayRetriever.sendNextWednesdaySchedule(passedUpdate);
+                break;
+            case "schedule_next_week_friday":
+                logger.debug("Got schedule_next_week_friday callback query");
+                ScheduleDayRetriever.sendNextFridaySchedule(passedUpdate);
+                break;
+            case "choose_subgroup_first":
+                logger.debug("Got choose_subgroup_second callback query");
+                ChangeSubgroupCallback.changeSubgroupCallback(passedUpdate, 1);
+                break;
+            case "choose_subgroup_second":
+                logger.debug("Got choose_subgroup_second callback query");
+                ChangeSubgroupCallback.changeSubgroupCallback(passedUpdate, 2);
                 break;
             default:
                 logger.error("Got unknown callback_query: " + call_data);
