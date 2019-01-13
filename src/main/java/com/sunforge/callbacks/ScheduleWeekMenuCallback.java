@@ -17,7 +17,7 @@ public class ScheduleWeekMenuCallback {
     private static final LocalizationBundle localizationBundle = LocalizationBundle.getInstance();
     private static final Logger logger = LogManager.getLogger(ScheduleWeekMenuCallback.class);
 
-    public static void changeKeyboardToDays(Update passedUpdate) {
+    static void changeKeyboardToDays(Update passedUpdate) {
         EditMessageText editMessageText = new EditMessageText();
         editMessageText.setChatId(passedUpdate.getCallbackQuery().getMessage().getChatId())
         .setMessageId(passedUpdate.getCallbackQuery().getMessage().getMessageId())
@@ -26,12 +26,15 @@ public class ScheduleWeekMenuCallback {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> rows = new ArrayList<>();
 
+        //Keyboard with 4 days:
+        //Mon Tues Wed Fri
         List<InlineKeyboardButton> daysRow = new ArrayList<>();
         daysRow.add(new InlineKeyboardButton().setText(localizationBundle.getString(LocalizationField.MONDAY_SHORTENED)).setCallbackData("schedule_week_monday"));
         daysRow.add(new InlineKeyboardButton().setText(localizationBundle.getString(LocalizationField.TUESDAY_SHORTENED)).setCallbackData("schedule_week_tuesday"));
         daysRow.add(new InlineKeyboardButton().setText(localizationBundle.getString(LocalizationField.WEDNESDAY_SHORTENED)).setCallbackData("schedule_week_wednesday"));
         daysRow.add(new InlineKeyboardButton().setText(localizationBundle.getString(LocalizationField.FRIDAY_SHORTENED)).setCallbackData("schedule_week_friday"));
 
+        //Adding Back button
         List<InlineKeyboardButton> backButtonRow = new ArrayList<>();
         backButtonRow.add(new InlineKeyboardButton().setText(localizationBundle.getString(LocalizationField.BACK)).setCallbackData("schedule_menu"));
 
