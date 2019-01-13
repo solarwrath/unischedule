@@ -18,7 +18,7 @@ public class CommandDistributionHandler {
                 break;
             case "Расписание":
                 logger.info("Got Расписание command");
-                ScheduleCommand.sendSceduleMarkup(passedUpdate);
+                ScheduleCommand.sendScheduleMarkup(passedUpdate);
                 break;
             case "Настройки":
                 logger.info("Got Настройки command");

@@ -14,16 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ScheduleCommand {
-    private static final LocalizationBundle localizationBundle = LocalizationBundle.getInstance();
     private static final Logger logger = LogManager.getLogger(ScheduleCommand.class);
+    private static final LocalizationBundle localizationBundle = LocalizationBundle.getInstance();
 
-    public static void sendSceduleMarkup(Update passedUpdate){
+    static void sendScheduleMarkup(Update passedUpdate){
 
         SendMessage snd = new SendMessage()
                 .setChatId(passedUpdate.getMessage().getChatId())
                 .setText(localizationBundle.getString(LocalizationField.SCHEDULE_RESPONSE));
-
-        logger.debug("Created SendMessage", snd);
 
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
@@ -45,7 +43,7 @@ public class ScheduleCommand {
         markupInline.setKeyboard(rowsInline);
         snd.setReplyMarkup(markupInline);
 
-        logger.debug("Successfully set InlineKeyboardMarkup", markupInline);
+        logger.debug("Sending schedule menu message");
 
         UniScheduleBot.getInstance().sendMessage(snd);
     }
