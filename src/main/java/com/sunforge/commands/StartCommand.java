@@ -21,15 +21,18 @@ import static com.sunforge.db.UserOperations.initializeUser;
 public class StartCommand {
 
     private static final Logger logger = LogManager.getLogger(StartCommand.class);
+    private static final LocalizationBundle localizationBundle = LocalizationBundle.getInstance();
 
-    public static void handleStartCommand(Update passedUpdate){
+    static void handleStartCommand(Update passedUpdate) {
         long chat_id = passedUpdate.getMessage().getChatId();
         Message passedMessage = passedUpdate.getMessage();
+
         User currentUser = passedMessage.getFrom();
 
         String username = currentUser.getUserName();
         String firstName = currentUser.getFirstName();
         String lastName = currentUser.getLastName();
+
 
         try {
             //Create a row in table 'users' in db and populate it with user's id, name and username
@@ -37,10 +40,11 @@ public class StartCommand {
 
             //Get greetings message
 
-            LocalizationBundle localizationBundle = LocalizationBundle.getInstance();
             String greetingsMessageText = localizationBundle.getString(LocalizationField.START_CHOOSE_SUBGROUP);
 
-            SendMessage startChooseSubgroupMessage = new SendMessage().setChatId(chat_id).setText(greetingsMessageText);
+            SendMessage startChooseSubgroupMessage = new SendMessage().
+                                                        setChatId(chat_id).
+                                                        setText(greetingsMessageText);
 
             //Create inlineKeyboard with 2 buttons with subgroups
             InlineKeyboardMarkup keyboardMarkup = new InlineKeyboardMarkup();
