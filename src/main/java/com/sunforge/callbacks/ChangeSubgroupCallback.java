@@ -24,7 +24,7 @@ public class ChangeSubgroupCallback {
             logger.error("Couldn't get the subgroup of " + chat_id, e);
             SendMessage snd = new SendMessage().setChatId(passedUpdate.getCallbackQuery().getMessage().getChatId())
                                 .setText(localizationBundle.getString(LocalizationField.ERROR_DB_RETRIEVE_SUBGROUP));
-            UniScheduleBot.getInstance().sendPassedMessage(snd);
+            UniScheduleBot.getInstance().sendMessage(snd);
         }
     }
 }

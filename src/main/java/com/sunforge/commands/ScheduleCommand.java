@@ -47,6 +47,6 @@ public class ScheduleCommand {
 
         logger.debug("Successfully set InlineKeyboardMarkup", markupInline);
 
-        UniScheduleBot.getInstance().sendPassedMessage(snd);
+        UniScheduleBot.getInstance().sendMessage(snd);
     }
 }

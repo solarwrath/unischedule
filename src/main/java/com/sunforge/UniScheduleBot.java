@@ -25,22 +25,29 @@ public class UniScheduleBot extends TelegramLongPollingBot{
     public static UniScheduleBot getInstance(){
         if(instance == null){
             instance = new UniScheduleBot();
+            logger.debug("Created UniScheduleBot instance", instance);
         }
         return instance;
     }
 
     @Override
     public void onUpdateReceived(Update update) {
+        logger.debug("Got update from " + ((update.hasMessage()) ? update.getMessage().getChatId() : update.getCallbackQuery().getMessage().getChatId()), update);
+
+        //If update is non-null message from user (both custom and ReplyKeyboard's messages
         if(update.hasMessage() && update.getMessage().hasText()){
             String userMessage = update.getMessage().getText();
-            logger.info("Message from " + update.getMessage().getFrom().getUserName() + ": \"" + userMessage+"\"");
+            logger.info("Command from " + update.getMessage().getChatId() + ": \"" + userMessage+"\"");
 
             if(validateCommand(userMessage)){
-                logger.trace("Validated command " +userMessage);
+                logger.debug("Validated command " + userMessage);
                 handleCommand(update);
+            }else{
+                logger.debug("The command I got wasn't valid: " + userMessage);
             }
-
+        //If update is callback query
         }else if (update.hasCallbackQuery()) {
+            logger.info("Callback query from " + update.getCallbackQuery().getMessage().getChatId() + ": \"" + update.getCallbackQuery().getData()+"\"");
             handleCallBack(update);
         }
     }
@@ -55,10 +62,10 @@ public class UniScheduleBot extends TelegramLongPollingBot{
         return "773829235:AAGbh1wRiBnfYhJjMCcFHT--2GL-0jzixWk";
     }
 
-    public void sendPassedMessage(SendMessage passedMessage){
+    public void sendMessage(SendMessage passedMessage){
         try{
             execute(passedMessage);
-            logger.debug("Sended a message to user " + passedMessage.getChatId()+ " \"" + passedMessage.getText() + "\"");
+            logger.debug("Sent a message to user " + passedMessage.getChatId()+ " \"" + passedMessage.getText() + "\"");
         } catch (TelegramApiException e) {
             logger.error("Telegram stuff fucked up");
             e.printStackTrace();
@@ -94,7 +101,4 @@ public class UniScheduleBot extends TelegramLongPollingBot{
             e.printStackTrace();
         }
     }
-
-
-
 }

@@ -19,6 +19,6 @@ public class UnknownCommand {
         String unknownCommandMessage = LocalizationBundle.getInstance().getString(LocalizationField.ERROR_INPUT_INVALID_COMMAND);
         snd.setText(unknownCommandMessage);
 
-        UniScheduleBot.getInstance().sendPassedMessage(snd);
+        UniScheduleBot.getInstance().sendMessage(snd);
     }
 }

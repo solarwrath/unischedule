@@ -23,6 +23,6 @@ public class TimeCommand {
         snd.setText(timeMessage);
 
         logger.debug("Set timeMessage");
-        UniScheduleBot.getInstance().sendPassedMessage(snd);
+        UniScheduleBot.getInstance().sendMessage(snd);
     }
 }

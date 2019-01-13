@@ -56,7 +56,7 @@ public class StartCommand {
             keyboardMarkup.setKeyboard(rows);
             startChooseSubgroupMessage.setReplyMarkup(keyboardMarkup);
 
-            UniScheduleBot.getInstance().sendPassedMessage(startChooseSubgroupMessage);
+            UniScheduleBot.getInstance().sendMessage(startChooseSubgroupMessage);
         } catch (SQLException e) {
             logger.error("Couldn't initialize user in db", e);
         }

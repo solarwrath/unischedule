@@ -40,6 +40,6 @@ public class SettingsCommand {
 
         logger.debug("Successfully set InlineKeyboardMarkup", markupInline);
 
-        UniScheduleBot.getInstance().sendPassedMessage(snd);
+        UniScheduleBot.getInstance().sendMessage(snd);
     }
 }
