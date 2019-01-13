@@ -9,20 +9,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ValidationHandler {
+class ValidationHandler {
     private static final Logger logger = LogManager.getLogger(ValidationHandler.class);
-
     private static final LocalizationBundle localizationBundle = LocalizationBundle.getInstance();
 
+    //Create a list to store available commands for validation
     private static List<String> listOfCommands = new ArrayList<>();
     static {
         listOfCommands.add("/start");
         listOfCommands.add(localizationBundle.getString(LocalizationField.SCHEDULE));
         listOfCommands.add(localizationBundle.getString(LocalizationField.TIME_SCHEDULE));
         listOfCommands.add(localizationBundle.getString(LocalizationField.SETTINGS));
+        logger.debug("Created a list of avaliable commands", listOfCommands);
     }
 
-    public static boolean validateCommand(String givenString) {
+    static boolean validateCommand(String givenString) {
         return listOfCommands.contains(givenString);
     }
 }
