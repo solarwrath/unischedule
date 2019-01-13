@@ -10,14 +10,12 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 public class UnknownCommand {
 
-    private static final Logger logger = LogManager.getLogger(UnknownCommand.class);
+    private static final LocalizationBundle localizationBundle = LocalizationBundle.getInstance();
 
     public static void sendUnknownCommandMessage(Update passedUpdate){
-        SendMessage snd = new SendMessage();
-        snd.setChatId(passedUpdate.getMessage().getChatId());
-
-        String unknownCommandMessage = LocalizationBundle.getInstance().getString(LocalizationField.ERROR_INPUT_INVALID_COMMAND);
-        snd.setText(unknownCommandMessage);
+        SendMessage snd = new SendMessage()
+                            .setChatId(passedUpdate.getMessage().getChatId())
+                            .setText(localizationBundle.getString(LocalizationField.ERROR_INPUT_INVALID_COMMAND));
 
         UniScheduleBot.getInstance().sendMessage(snd);
     }
