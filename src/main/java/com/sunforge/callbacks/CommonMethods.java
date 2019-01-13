@@ -17,10 +17,10 @@ public class CommonMethods {
     private static final Logger logger = LogManager.getLogger(CommonMethods.class);
     private static final LocalizationBundle localizationBundle = LocalizationBundle.getInstance();
 
-    public static void editMessageToScheduleMenu(Update passedUpdate){
+    static void editMessageToScheduleMenu(Update passedUpdate){
 
-        EditMessageReplyMarkup editKeyboard = new EditMessageReplyMarkup();
-        editKeyboard.setChatId(passedUpdate.getCallbackQuery().getMessage().getChatId())
+        EditMessageReplyMarkup editKeyboard = new EditMessageReplyMarkup()
+                .setChatId(passedUpdate.getCallbackQuery().getMessage().getChatId())
                 .setMessageId(passedUpdate.getCallbackQuery().getMessage().getMessageId());
 
         logger.debug("Created EditMessageReplyMarkup for ScheduleMenu");
@@ -39,4 +39,5 @@ public class CommonMethods {
 
         UniScheduleBot.getInstance().editReplyMarkupMessage(editKeyboard);
     }
+
 }
