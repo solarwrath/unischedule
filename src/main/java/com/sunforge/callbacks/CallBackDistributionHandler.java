@@ -1,6 +1,5 @@
 package com.sunforge.callbacks;
 
-import com.sunforge.commands.UnknownCommand;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -84,9 +83,8 @@ public class CallBackDistributionHandler {
                 ChangeSubgroupCallback.changeSubgroupCallback(passedUpdate, 2);
                 break;
             default:
-                logger.error("Got unknown callback_query: " + call_data);
-                //TODO HANDLE THIS
-                UnknownCommand.sendUnknownCommandMessage(passedUpdate);
+                logger.error("Got unknown callback query: " + call_data);
+                UnknownCallback.sendUnknownCallbackMessage(passedUpdate);
         }
     }
 }
