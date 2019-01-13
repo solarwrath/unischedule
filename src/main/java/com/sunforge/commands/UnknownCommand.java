@@ -3,8 +3,6 @@ package com.sunforge.commands;
 import com.sunforge.UniScheduleBot;
 import com.sunforge.properties.LocalizationBundle;
 import com.sunforge.properties.LocalizationField;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
