@@ -10,11 +10,11 @@ public class TimeCommand {
 
     private static final Logger logger = LogManager.getLogger(TimeCommand.class);
 
-    public static void sendTimeMessage(Update passedUpdate){
-        SendMessage snd = new SendMessage();
-        snd.setChatId(passedUpdate.getMessage().getChatId());
+    static void sendTimeMessage(Update passedUpdate){
+        SendMessage snd = new SendMessage().
+                                setChatId(passedUpdate.getMessage().getChatId());
 
-        String timeMessage = "Пара   Начало - Конец\n" +
+        final String timeMessage = "Пара   Начало - Конец\n" +
                 "   1             9:00 − 10:20\n" +
                 "   2           10:30 − 11:50\n" +
                 "   3           12:30 − 13:50\n" +
