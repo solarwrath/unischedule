@@ -16,15 +16,12 @@ import java.util.List;
 public class SettingsCommand {
 
     private static final Logger logger = LogManager.getLogger(SettingsCommand.class);
+    private static final LocalizationBundle localizationBundle = LocalizationBundle.getInstance();
 
-    protected static void sendSettingsKeyboard(Update passedUpdate) {
-        LocalizationBundle localizationBundle = LocalizationBundle.getInstance();
-
+    static void sendSettingsKeyboard(Update passedUpdate) {
         SendMessage snd = new SendMessage()
                 .setChatId(passedUpdate.getMessage().getChatId())
                 .setText(localizationBundle.getString(LocalizationField.SETTINGS));
-
-        logger.debug("Created SendMessage", snd);
 
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
@@ -38,7 +35,7 @@ public class SettingsCommand {
         markupInline.setKeyboard(rowsInline);
         snd.setReplyMarkup(markupInline);
 
-        logger.debug("Successfully set InlineKeyboardMarkup", markupInline);
+        logger.debug("Sending SettingsMessage", snd);
 
         UniScheduleBot.getInstance().sendMessage(snd);
     }
