@@ -5,10 +5,6 @@ import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.generics.LongPollingBot;
 
-/**
- * Hello world!
- *
- */
 public class App{
     public static void main( String[] args )
     {
